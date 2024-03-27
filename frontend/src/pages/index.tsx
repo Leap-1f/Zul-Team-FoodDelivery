@@ -3,6 +3,7 @@ export default function Home() {
     <>
       <p>Hello</p>
       <p>Ariguun</p>
+      <p>test01</p>
     </>
   );
 }
