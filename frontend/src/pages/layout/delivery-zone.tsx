@@ -1,8 +1,11 @@
 import { Box } from "@mui/material";
 import Footer from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
 export default function DeliveryZone() {
      return (
+          
           <Box>
+               <Header/>
                <Box
                     sx={{
                          width: "800px",
@@ -15,5 +18,6 @@ export default function DeliveryZone() {
                ></Box>
                <Footer/>
           </Box>
+          
      );
 }

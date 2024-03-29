@@ -27,7 +27,7 @@ const LinkItem: React.FC<LinkItemProps> = ({ text, href }) => {
 };
 
 const linkItems = [
-     { text: "Нүүр", href: "/layout/menu" },
+     { text: "Нүүр", href: "/" },
      { text: "Холбоо барих", href: "/layout/contact" },
      { text: "Хоолны цэс", href: "/layout/menu" },
      { text: "Үйлчилгээний нөхцөл", href: "/layout/terms" },
