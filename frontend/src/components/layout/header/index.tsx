@@ -133,6 +133,7 @@ export const Header = () => {
           </Box>
         </Box>
       </Box>
+      </Box>
     </>
   );
 };
