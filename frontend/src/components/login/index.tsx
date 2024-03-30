@@ -12,14 +12,14 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import * as React from "react";
 import { useRouter } from "next/router";
-import { FormikProvider, useFormik } from "formik";
+import { FormikProvider, useFormik } from "formik"
 import { loginSchema } from "./validationSchema";
 import { useState, useEffect } from "react";
 
 const Login = () => {
   const { push } = useRouter();
   const [warningMessage, setWarningMessage] = useState("");
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
