@@ -53,7 +53,6 @@ export default function Home() {
   const [isCreateFood, setIsCreateFood] = useState(false);
   const [openCreateFood, setOpenCreateFood] = React.useState(false);
   const [openCreateCategory, setOpenCreateCategory] = React.useState(false);
-  
 
   const handleClickOpenCreateFood = () => {
     setOpenCreateFood(true);
@@ -212,7 +211,7 @@ export default function Home() {
                 </Dropdown>
               </Stack>
               <Stack
-               onClick={handleClickOpenCreateCategory}
+                onClick={handleClickOpenCreateCategory}
                 direction="row"
                 alignItems="center"
                 spacing={1}
@@ -238,7 +237,10 @@ export default function Home() {
                   Create new category
                 </Typography>
               </Stack>
-              <CreateCategory handleClose={handleCloseCreateCategory} open={openCreateCategory}></CreateCategory>
+              <CreateCategory
+                handleClose={handleCloseCreateCategory}
+                open={openCreateCategory}
+              ></CreateCategory>
             </Stack>
           </Stack>
           <Stack width="70%">
@@ -274,28 +276,35 @@ export default function Home() {
               >
                 <Typography variant="subtitle1">Add new food</Typography>
               </Stack>
-              <CreateFood handleClose={handleCloseCreateFood} open={openCreateFood}></CreateFood>
+              <CreateFood
+                handleClose={handleCloseCreateFood}
+                open={openCreateFood}
+              ></CreateFood>
             </Stack>
             <Stack
               direction="row"
-              justifyContent="space-between"
-              alignItems="center"
+              alignItems="start"
               sx={{ ml: 3, mt: 4, height: "80vh", overflow: "" }}
             >
               <Grid
-                justifyContent="space-between"
-                alignItems="flex-start"
                 container
                 rowSpacing={1}
                 columnSpacing={1}
-                height="80vh"
                 overflow="auto"
+                gridColumn={3}
+                columnGap="30px"
+                rowGap="20px"
               >
                 <FoodCard></FoodCard>
 
                 <FoodCard></FoodCard>
                 <FoodCard></FoodCard>
                 <FoodCard></FoodCard>
+                <FoodCard></FoodCard>
+
+                {/* <FoodCard></FoodCard>
+                <FoodCard></FoodCard>
+                <FoodCard></FoodCard> */}
               </Grid>
             </Stack>
           </Stack>
