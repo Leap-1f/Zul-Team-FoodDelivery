@@ -378,9 +378,5 @@ const MenuButton = styled(BaseMenuButton)(
   &:hover {
     background-color: "red"
   }
-
-
-
-
   `
 );
