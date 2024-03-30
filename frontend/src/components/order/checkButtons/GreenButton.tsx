@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import Image from "next/image";
-import CheckImage from "../utilsImages/check.svg";
+import CheckImage from "../checkButtonImages/check.svg";
 export const GreenButton = () => {
   return (
     <>
