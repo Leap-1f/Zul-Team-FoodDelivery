@@ -4,14 +4,15 @@ import { StepOne } from "@/components/order/orderTexts/StepOne";
 import { StepTwo } from "@/components/order/orderTexts/StepTwo";
 import { Box } from "@mui/material";
 import { EnterAddress } from "@/components/order/EnterAddress";
+import { Orders } from "@/components/order/Orders";
 export default function Home() {
   return (
     <>
       <Header></Header>
-      <Box sx={{ justifyContent: "center" }}>
-        <StepOne />
+      <StepOne />
+      <Box sx={{ justifyContent: "center", display: "flex", gap: 10 }}>
         <EnterAddress />
-        {/* <StepTwo /> */}
+        <Orders />
       </Box>
       <Footer />
     </>

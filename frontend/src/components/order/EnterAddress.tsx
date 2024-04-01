@@ -1,15 +1,16 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Select, MenuItem } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { useState } from "react";
-export const EnterAddress = () => {
-  const [age, setAge] = useState("");
+import TextField from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import { grey } from "@mui/material/colors";
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+export const EnterAddress = () => {
+  const payTextStyle = {
+    fontWeight: "400",
+    fontSize: "16px",
+    lineHeight: "19.09px",
+    color: "#8b8e95",
+    textAlign: "center",
   };
   const topTextStyle = {
     fontWeight: "400",
@@ -24,33 +25,19 @@ export const EnterAddress = () => {
     "Сонгинохайрхан дүүрэг",
     "Чингэлтэй дүүрэг",
   ];
-  const khoroo = [
-    "1-р хороо",
-    "2-р хороо",
-    "3-р хороо",
-    "4-р хороо",
-    "5-р хороо",
-    "6-р хороо",
-    "7-р хороо",
-  ];
-  const apartment = [
-    "Нархан хотхон",
-    "26-р байр",
-    "Хоймор хотхон",
-    "45-р байр",
-    "Зайсан хотхон",
-  ];
+
   return (
     <Box
       sx={{
-        bgcolor: "rgba(0, 0, 0, 0.05) ",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.05)",
         p: 3,
         borderRadius: 2,
         width: "432px",
-        my: "20px",
+        height: "612px",
+        bgcolor: "#ffffff",
       }}
     >
-      <Box sx={{ display: "flex", gap: 5 }}>
+      <Box sx={{ display: "flex", gap: 5, flexDirection: "column" }}>
         <Box
           sx={{
             display: "flex",
@@ -59,36 +46,108 @@ export const EnterAddress = () => {
           }}
         >
           <Typography sx={topTextStyle}>Хаяг аа оруулна уу</Typography>
-          <Box
+          <Select
             sx={{
-              borderRadius: "4px",
-              border: "1px solid #ecedf0 ",
+              width: "full",
+              display: "flex",
+              gap: "4px",
+              border: "1px solid #ecedf0",
             }}
-          ></Box>
-          <FormControl sx={{ width: "384px" }}>
-            <LocationOnIcon
-              sx={{ color: "#000000", width: "24px", height: "24px" }}
-            />
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={age}
-              label="Age"
-              onChange={handleChange}
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
+          >
+            {districts.map((district) => (
+              <MenuItem
+                sx={{
+                  display: "flex",
+                  gap: "4px",
+                  py: 1,
+                  px: 2,
+                }}
+                key={district}
+                value={district}
+              >
+                <LocationOnIcon sx={{ width: 24, height: 24 }} />
+                <Typography>{district}</Typography>
+              </MenuItem>
+            ))}
+          </Select>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            gap: 4,
-          }}
-        ></Box>
+        <Box sx={{ display: "flex", gap: 4, flexDirection: "column" }}>
+          <Box sx={{ display: "flex", gap: "4px", flexDirection: "column" }}>
+            <Typography sx={topTextStyle}>Нэмэлт мэдээлэл</Typography>
+            <TextField
+              fullWidth
+              placeholder="Орц, давхар, орцны код ..."
+              sx={{
+                height: "112px",
+              }}
+            />
+          </Box>
+          <Box sx={{ display: "flex", gap: "4px", flexDirection: "column" }}>
+            <Typography sx={topTextStyle}>Утасны дугаар*</Typography>
+            <TextField
+              fullWidth
+              placeholder="Утасны дугаараа оруулна уу"
+              sx={{
+                height: "112px",
+              }}
+            />
+          </Box>
+          <Box sx={{ display: "flex", gap: 1, flexDirection: "column" }}>
+            <Typography
+              sx={{
+                fontWeight: "400",
+                fontSize: "14px",
+                lineHeight: "16.71px",
+                color: "#000000",
+              }}
+            >
+              Төлбөр төлөх
+            </Typography>
+            <Box sx={{ display: "flex", gap: "33px" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  justifyItems: "center",
+                  alignItems: "center",
+                  width: "50%",
+                }}
+              >
+                <Checkbox
+                  sx={{
+                    width: 24,
+                    height: 24,
+                    color: grey[900],
+                    "&.Mui-checked": {
+                      color: "#1C1B1F",
+                    },
+                  }}
+                />
+                <Typography sx={payTextStyle}>Бэлнээр</Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  justifyItems: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Checkbox
+                  sx={{
+                    width: 24,
+                    height: 24,
+                    color: grey[900],
+                    "&.Mui-checked": {
+                      color: "#1C1B1F",
+                    },
+                  }}
+                />
+                <Typography sx={payTextStyle}>Картаар</Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
