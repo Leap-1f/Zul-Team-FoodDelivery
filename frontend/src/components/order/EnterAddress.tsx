@@ -1,10 +1,19 @@
-import { Box, Typography, Select, MenuItem } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import { grey } from "@mui/material/colors";
+import React, { useState } from "react";
 
 export const EnterAddress = () => {
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
   const payTextStyle = {
     fontWeight: "400",
     fontSize: "16px",
@@ -46,39 +55,66 @@ export const EnterAddress = () => {
           }}
         >
           <Typography sx={topTextStyle}>Хаяг аа оруулна уу</Typography>
-          <Select
-            sx={{
-              width: "full",
-              display: "flex",
-              gap: "4px",
-              border: "1px solid #ecedf0",
-            }}
-          >
-            {districts.map((district) => (
-              <MenuItem
-                sx={{
-                  display: "flex",
-                  gap: "4px",
-                  py: 1,
-                  px: 2,
-                }}
-                key={district}
-                value={district}
-              >
-                <LocationOnIcon sx={{ width: 24, height: 24 }} />
-                <Typography>{district}</Typography>
-              </MenuItem>
-            ))}
-          </Select>
+          <FormControl>
+            <InputLabel
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+                visibility: isSelectOpen ? "hidden" : "visible",
+              }}
+            >
+              <LocationOnIcon sx={{ width: 20, height: 20 }} />
+              Дүүрэг сонгоно уу
+            </InputLabel>
+            <Select
+              sx={{
+                width: "full",
+                display: "flex",
+                gap: "4px",
+                border: "1px solid #ecedf0",
+              }}
+              open={isSelectOpen}
+              onClose={() => setIsSelectOpen(false)}
+              onOpen={() => setIsSelectOpen(true)}
+            >
+              {districts.map((district) => (
+                <MenuItem
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                    py: 1,
+                    px: 2,
+                  }}
+                  key={district}
+                  value={district}
+                >
+                  <LocationOnIcon sx={{ width: 24, height: 24 }} />
+                  <Typography>{district}</Typography>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
         <Box sx={{ display: "flex", gap: 4, flexDirection: "column" }}>
           <Box sx={{ display: "flex", gap: "4px", flexDirection: "column" }}>
             <Typography sx={topTextStyle}>Нэмэлт мэдээлэл</Typography>
             <TextField
-              fullWidth
+              multiline
+              rows={6}
               placeholder="Орц, давхар, орцны код ..."
               sx={{
-                height: "112px",
+                width: "full",
+                outline: "none",
+                textWrap: "wrap",
+
+                "& .MuiInputBase-root": {
+                  color: "#333",
+                  py: 1,
+                  px: 2,
+                  outline: "none",
+                },
               }}
             />
           </Box>
