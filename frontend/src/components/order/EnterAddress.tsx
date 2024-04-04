@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -10,10 +11,8 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import { grey } from "@mui/material/colors";
-import React, { useState } from "react";
 
 export const EnterAddress = () => {
-  const [isSelectOpen, setIsSelectOpen] = useState(false);
   const payTextStyle = {
     fontWeight: "400",
     fontSize: "16px",
@@ -34,6 +33,12 @@ export const EnterAddress = () => {
     "Сонгинохайрхан дүүрэг",
     "Чингэлтэй дүүрэг",
   ];
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  // const [changeColor, setChangeColor] = useState(false);
+
+  // const formChangeColor = () => {
+  //   setChangeColor(!changeColor);
+  // };
 
   return (
     <Box
@@ -46,7 +51,13 @@ export const EnterAddress = () => {
         bgcolor: "#ffffff",
       }}
     >
-      <Box sx={{ display: "flex", gap: 5, flexDirection: "column" }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 5,
+          flexDirection: "column",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -55,18 +66,27 @@ export const EnterAddress = () => {
           }}
         >
           <Typography sx={topTextStyle}>Хаяг аа оруулна уу</Typography>
-          <FormControl>
-            <InputLabel
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-                visibility: isSelectOpen ? "hidden" : "visible",
-              }}
-            >
-              <LocationOnIcon sx={{ width: 20, height: 20 }} />
-              Дүүрэг сонгоно уу
-            </InputLabel>
+          <FormControl
+            sx={{
+              position: "relative",
+            }}
+          >
+            {selectedDistrict === "" && (
+              <InputLabel
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  position: "absolute",
+                  left: 0,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                }}
+              >
+                <LocationOnIcon sx={{ width: 20, height: 20 }} />
+                Дүүрэг сонгоно уу
+              </InputLabel>
+            )}
             <Select
               sx={{
                 width: "full",
@@ -74,9 +94,10 @@ export const EnterAddress = () => {
                 gap: "4px",
                 border: "1px solid #ecedf0",
               }}
-              open={isSelectOpen}
-              onClose={() => setIsSelectOpen(false)}
-              onOpen={() => setIsSelectOpen(true)}
+              value={selectedDistrict}
+              onChange={(e) => {
+                setSelectedDistrict(e.target.value);
+              }}
             >
               {districts.map((district) => (
                 <MenuItem
@@ -90,8 +111,10 @@ export const EnterAddress = () => {
                   key={district}
                   value={district}
                 >
-                  <LocationOnIcon sx={{ width: 24, height: 24 }} />
-                  <Typography>{district}</Typography>
+                  <Box sx={{ display: "flex" }}>
+                    <LocationOnIcon sx={{ width: 24, height: 24 }} />
+                    <Typography>{district}</Typography>
+                  </Box>
                 </MenuItem>
               ))}
             </Select>
