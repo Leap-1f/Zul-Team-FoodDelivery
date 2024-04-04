@@ -10,7 +10,9 @@ export default function Home() {
     <>
       <Header></Header>
       <StepOne />
-      <Box sx={{ justifyContent: "center", display: "flex", gap: 10 }}>
+      <Box
+        sx={{ justifyContent: "center", display: "flex", gap: 10, py: "250px" }}
+      >
         <EnterAddress />
         <Orders />
       </Box>

@@ -13,6 +13,81 @@ import Checkbox from "@mui/material/Checkbox";
 import { grey } from "@mui/material/colors";
 
 export const EnterAddress = () => {
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [changeColor, setChangeColor] = useState(false);
+
+  const [selectedKhoroo, setSelectedKhoroo] = useState("");
+  const [changeColorTwo, setChangeColorTwo] = useState(false);
+
+  const [selectedApartment, setSelectedApartment] = useState("");
+  const [changeColorThree, setChangeColorThree] = useState(false);
+
+  const [checkBox, setCheckBox] = useState(false);
+  const toggleCheckBox = () => {
+    setCheckBox(!checkBox);
+  };
+
+  const changeFormColor = () => {
+    setChangeColor(!changeColor);
+  };
+  const changeFormColorTwo = () => {
+    setChangeColorTwo(!changeColorTwo);
+  };
+  const changeFormColorThree = () => {
+    setChangeColorThree(!changeColorThree);
+  };
+  const districts = [
+    "Баянзүрх дүүрэг",
+    "Хан-Уул дүүрэг",
+    "Баянгол дүүрэг",
+    "Сонгинохайрхан дүүрэг",
+    "Чингэлтэй дүүрэг",
+  ];
+  const khoroo = [
+    "1-р хороо",
+    "2-р хороо",
+    "3-р хороо",
+    "4-р хороо",
+    "5-р хороо",
+    "6-р хороо",
+    "7-р хороо",
+  ];
+  const apartment = [
+    "Нархан хотхон",
+    "26-р байр",
+    "Хоймор хотхон",
+    "45-р байр",
+    "Зайсан хотхон",
+  ];
+  const inputBaseBorderStyle = {
+    "& .MuiInputBase-root": {
+      "&:focus": {
+        outline: "none",
+      },
+    },
+  };
+  const menuItemStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: "4px",
+    py: 1,
+    px: 2,
+  };
+  const selectStyle = {
+    width: "full",
+    display: "flex",
+    gap: "4px",
+    border: "1px solid #ecedf0",
+  };
+  const inputLabelStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: "4px",
+    position: "absolute",
+    left: 0,
+    top: "50%",
+    transform: "translateY(-50%)",
+  };
   const payTextStyle = {
     fontWeight: "400",
     fontSize: "16px",
@@ -26,19 +101,6 @@ export const EnterAddress = () => {
     lineHeight: "16.71px",
     color: "rgba(0, 0, 0, 1)",
   };
-  const districts = [
-    "Баянзүрх дүүрэг",
-    "Хан-Уул дүүрэг",
-    "Баянгол дүүрэг",
-    "Сонгинохайрхан дүүрэг",
-    "Чингэлтэй дүүрэг",
-  ];
-  const [selectedDistrict, setSelectedDistrict] = useState("");
-  // const [changeColor, setChangeColor] = useState(false);
-
-  // const formChangeColor = () => {
-  //   setChangeColor(!changeColor);
-  // };
 
   return (
     <Box
@@ -54,7 +116,7 @@ export const EnterAddress = () => {
       <Box
         sx={{
           display: "flex",
-          gap: 5,
+          gap: 3,
           flexDirection: "column",
         }}
       >
@@ -69,51 +131,122 @@ export const EnterAddress = () => {
           <FormControl
             sx={{
               position: "relative",
+              bgcolor: changeColor ? "#18ba51" : "#f7f7f8",
             }}
           >
             {selectedDistrict === "" && (
-              <InputLabel
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "4px",
-                  position: "absolute",
-                  left: 0,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                }}
-              >
-                <LocationOnIcon sx={{ width: 20, height: 20 }} />
-                Дүүрэг сонгоно уу
+              <InputLabel sx={inputLabelStyle}>
+                <LocationOnIcon
+                  sx={{
+                    width: 20,
+                    height: 20,
+                    color: changeColor ? grey[100] : grey[900],
+                  }}
+                />
+                <Typography sx={{ color: changeColor ? "#ffffff" : "#8B8E95" }}>
+                  {" "}
+                  Дүүрэг сонгоно уу
+                </Typography>
               </InputLabel>
             )}
             <Select
-              sx={{
-                width: "full",
-                display: "flex",
-                gap: "4px",
-                border: "1px solid #ecedf0",
-              }}
+              sx={selectStyle}
+              onOpen={changeFormColor}
+              onClose={changeFormColor}
               value={selectedDistrict}
               onChange={(e) => {
                 setSelectedDistrict(e.target.value);
               }}
             >
               {districts.map((district) => (
-                <MenuItem
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    py: 1,
-                    px: 2,
-                  }}
-                  key={district}
-                  value={district}
-                >
+                <MenuItem sx={menuItemStyle} key={district} value={district}>
                   <Box sx={{ display: "flex" }}>
                     <LocationOnIcon sx={{ width: 24, height: 24 }} />
-                    <Typography>{district}</Typography>
+                    <Typography sx={{}}>{district}</Typography>
+                  </Box>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl
+            sx={{
+              position: "relative",
+              bgcolor: changeColorTwo ? "#18ba51" : "#f7f7f8",
+            }}
+          >
+            {selectedKhoroo === "" && (
+              <InputLabel sx={inputLabelStyle}>
+                <LocationOnIcon
+                  sx={{
+                    width: 20,
+                    height: 20,
+                    color: changeColorTwo ? grey[100] : grey[900],
+                  }}
+                />
+                <Typography
+                  sx={{ color: changeColorTwo ? "#ffffff" : "#8B8E95" }}
+                >
+                  {" "}
+                  Хороо сонгоно уу
+                </Typography>
+              </InputLabel>
+            )}
+            <Select
+              sx={selectStyle}
+              onOpen={changeFormColorTwo}
+              onClose={changeFormColorTwo}
+              value={selectedKhoroo}
+              onChange={(e) => {
+                setSelectedKhoroo(e.target.value);
+              }}
+            >
+              {khoroo.map((khoroo) => (
+                <MenuItem sx={menuItemStyle} key={khoroo} value={khoroo}>
+                  <Box sx={{ display: "flex" }}>
+                    <LocationOnIcon sx={{ width: 24, height: 24 }} />
+                    <Typography sx={{}}>{khoroo}</Typography>
+                  </Box>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl
+            sx={{
+              position: "relative",
+              bgcolor: changeColorThree ? "#18ba51" : "#f7f7f8",
+            }}
+          >
+            {selectedApartment === "" && (
+              <InputLabel sx={inputLabelStyle}>
+                <LocationOnIcon
+                  sx={{
+                    width: 20,
+                    height: 20,
+                    color: changeColorThree ? grey[100] : grey[900],
+                  }}
+                />
+                <Typography
+                  sx={{ color: changeColorThree ? "#ffffff" : "#8B8E95" }}
+                >
+                  {" "}
+                  Байр, гудамж сонгоно уу
+                </Typography>
+              </InputLabel>
+            )}
+            <Select
+              sx={selectStyle}
+              onOpen={changeFormColorThree}
+              onClose={changeFormColorThree}
+              value={selectedApartment}
+              onChange={(e) => {
+                setSelectedApartment(e.target.value);
+              }}
+            >
+              {apartment.map((apartment) => (
+                <MenuItem sx={menuItemStyle} key={apartment} value={apartment}>
+                  <Box sx={{ display: "flex" }}>
+                    <LocationOnIcon sx={{ width: 24, height: 24 }} />
+                    <Typography sx={{}}>{apartment}</Typography>
                   </Box>
                 </MenuItem>
               ))}
@@ -131,25 +264,22 @@ export const EnterAddress = () => {
                 width: "full",
                 outline: "none",
                 textWrap: "wrap",
-
+            
                 "& .MuiInputBase-root": {
                   color: "#333",
                   py: 1,
                   px: 2,
                   outline: "none",
+                  "&:focus": {
+                    outline: "none",
+                  },
                 },
               }}
             />
           </Box>
           <Box sx={{ display: "flex", gap: "4px", flexDirection: "column" }}>
             <Typography sx={topTextStyle}>Утасны дугаар*</Typography>
-            <TextField
-              fullWidth
-              placeholder="Утасны дугаараа оруулна уу"
-              sx={{
-                height: "112px",
-              }}
-            />
+            <TextField fullWidth placeholder="Утасны дугаараа оруулна уу" />
           </Box>
           <Box sx={{ display: "flex", gap: 1, flexDirection: "column" }}>
             <Typography
@@ -181,6 +311,7 @@ export const EnterAddress = () => {
                       color: "#1C1B1F",
                     },
                   }}
+                  onClick={toggleCheckBox}
                 />
                 <Typography sx={payTextStyle}>Бэлнээр</Typography>
               </Box>
@@ -193,6 +324,7 @@ export const EnterAddress = () => {
                 }}
               >
                 <Checkbox
+                  onClick={toggleCheckBox}
                   sx={{
                     width: 24,
                     height: 24,
