@@ -1,23 +1,39 @@
 import { UserModel } from "../model/user.model.js";
 
-export const getUserByField = async (req, res) => {  //Login-d shiglana
-  const {email, password} = req.body
-  try {
-    const data = await UserModel.find({ email: email, password: password});
-  console.log(data);
+import bcrypt from "bcrypt";
 
-  res.send(data);
+export const getUserByField = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return res.json({
+        error: "User not found",
+      });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.json({
+        error: "Wrong password",
+      });
+    }
+
+    res.send(user);
   } catch (err) {
     console.log(err);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 export const getUserById = async (req, res) => {
-  const {id} = req.body
+  const { id } = req.body;
   try {
     const data = await UserModel.findById(id);
-  console.log(data);
+    console.log(data);
 
-  res.send(data);
+    res.send(data);
   } catch (err) {
     console.log(err);
   }
@@ -26,23 +42,32 @@ export const getUserById = async (req, res) => {
 export const getAllUsers = async (req, res) => {
   try {
     const data = await UserModel.find();
-  console.log(data);
-  res.send(data);
+    console.log(data);
+    res.send(data);
   } catch (err) {
     console.log(err);
   }
 };
 
-export const createUser = async (req, res) => {  //signup -d ashiglana
-  const {name, email, password, phoneNumber, address} = req.body
-  try{
-    const newUser = await UserModel.create({name: name, email: email, password: password, phoneNumber: phoneNumber, address: address});
-    res.send(newUser)
-  }
-  catch(err){
+export const createUser = async (req, res) => {
+  //signup -d ashiglana
+  const { name, email, password, phoneNumber, address } = req.body;
+  const salt = bcrypt.genSaltSync(1);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  try {
+    const newUser = await UserModel.create({
+      name: name,
+      email: email,
+      password: password,
+      phoneNumber: phoneNumber,
+      address: address,
+    });
+    res.send(newUser);
+  } catch (err) {
     console.log(err);
   }
-}
+};
 
 // export const createUser = async (req, res) => {  //signup -d ashiglana
 //   try{
@@ -54,36 +79,42 @@ export const createUser = async (req, res) => {  //signup -d ashiglana
 //   }
 // }
 
-export const updateUser = async (req, res) => {   //edit profile-d ashiglana
-  const {id, name, email, phoneNumber} = req.body
-  try{
-    const updatedUserData = await UserModel.updateOne({_id: id}, {name: name, email: email, phoneNumber: phoneNumber});
-    res.send(updatedUserData)
-  }
-  catch(err){
-    console.log(err);
-  }
-}
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-export const getUserEmail = async (req, res) => {  //forget password-d shiglana
-  const {email} = req.body
+export const updateUser = async (req, res) => {
+  //edit profile-d ashiglana
+  const { id, name, email, phoneNumber } = req.body;
   try {
-    const data = await UserModel.find({ email: email});
-  console.log(data);
-
-  res.send(data);
+    const updatedUserData = await UserModel.updateOne(
+      { _id: id },
+      { name: name, email: email, phoneNumber: phoneNumber }
+    );
+    res.send(updatedUserData);
   } catch (err) {
     console.log(err);
   }
 };
-export const updateUserPassword = async (req, res) => {    //forget password-d ashiglana 
-  const {id, newPassword} = req.body
-  try{
-    const updatedUserData = await UserModel.updateOne({_id: id}, {password: newPassword});
-    res.send(updatedUserData)
-  }
-  catch(err){
+
+export const getUserEmail = async (req, res) => {
+  //forget password-d shiglana
+  const { email } = req.body;
+  try {
+    const data = await UserModel.find({ email: email });
+    console.log(data);
+
+    res.send(data);
+  } catch (err) {
     console.log(err);
   }
-}
+};
+export const updateUserPassword = async (req, res) => {
+  //forget password-d ashiglana
+  const { id, newPassword } = req.body;
+  try {
+    const updatedUserData = await UserModel.updateOne(
+      { _id: id },
+      { password: newPassword }
+    );
+    res.send(updatedUserData);
+  } catch (err) {
+    console.log(err);
+  }
+};

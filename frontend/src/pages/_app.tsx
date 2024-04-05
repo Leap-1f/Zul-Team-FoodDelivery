@@ -7,7 +7,10 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <AdminContextProvider>
       <UserContextProvider>
-        <Header></Header>
+        <Header>
+          <title>Food Delivery</title>
+          <link rel="icon" href="/goyhool.png" />
+        </Header>
         <Component {...pageProps} />
       </UserContextProvider>
     </AdminContextProvider>
