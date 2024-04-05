@@ -13,6 +13,12 @@ import Checkbox from "@mui/material/Checkbox";
 import { grey } from "@mui/material/colors";
 
 export const EnterAddress = () => {
+  const [paymentMethod, setPaymentMethod] = useState("cash");
+
+  const handleChange = (event) => {
+    const { value } = event.target;
+    setPaymentMethod(value);
+  };
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [changeColor, setChangeColor] = useState(false);
 
@@ -21,11 +27,6 @@ export const EnterAddress = () => {
 
   const [selectedApartment, setSelectedApartment] = useState("");
   const [changeColorThree, setChangeColorThree] = useState(false);
-
-  const [checkBox, setCheckBox] = useState(false);
-  const toggleCheckBox = () => {
-    setCheckBox(!checkBox);
-  };
 
   const changeFormColor = () => {
     setChangeColor(!changeColor);
@@ -150,7 +151,7 @@ export const EnterAddress = () => {
               </InputLabel>
             )}
             <Select
-              sx={selectStyle}
+              sx={{ ...selectStyle }}
               onOpen={changeFormColor}
               onClose={changeFormColor}
               value={selectedDistrict}
@@ -159,7 +160,13 @@ export const EnterAddress = () => {
               }}
             >
               {districts.map((district) => (
-                <MenuItem sx={menuItemStyle} key={district} value={district}>
+                <MenuItem
+                  sx={{
+                    ...menuItemStyle,
+                  }}
+                  key={district}
+                  value={district}
+                >
                   <Box sx={{ display: "flex" }}>
                     <LocationOnIcon sx={{ width: 24, height: 24 }} />
                     <Typography sx={{}}>{district}</Typography>
@@ -264,7 +271,7 @@ export const EnterAddress = () => {
                 width: "full",
                 outline: "none",
                 textWrap: "wrap",
-            
+
                 "& .MuiInputBase-root": {
                   color: "#333",
                   py: 1,
@@ -303,6 +310,7 @@ export const EnterAddress = () => {
                 }}
               >
                 <Checkbox
+                  value="cash"
                   sx={{
                     width: 24,
                     height: 24,
@@ -311,7 +319,8 @@ export const EnterAddress = () => {
                       color: "#1C1B1F",
                     },
                   }}
-                  onClick={toggleCheckBox}
+                  checked={paymentMethod === "cash"}
+                  onChange={handleChange}
                 />
                 <Typography sx={payTextStyle}>Бэлнээр</Typography>
               </Box>
@@ -324,7 +333,9 @@ export const EnterAddress = () => {
                 }}
               >
                 <Checkbox
-                  onClick={toggleCheckBox}
+                  value="card"
+                  checked={paymentMethod === "card"}
+                  onChange={handleChange}
                   sx={{
                     width: 24,
                     height: 24,
