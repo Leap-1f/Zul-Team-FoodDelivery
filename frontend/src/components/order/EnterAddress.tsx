@@ -28,14 +28,14 @@ export const EnterAddress = () => {
   const [selectedApartment, setSelectedApartment] = useState("");
   const [changeColorThree, setChangeColorThree] = useState(false);
 
-  const changeFormColor = () => {
-    setChangeColor(!changeColor);
+  const changeFormColor = (value) => {
+    setChangeColor(value !== "");
   };
-  const changeFormColorTwo = () => {
-    setChangeColorTwo(!changeColorTwo);
+  const changeFormColorTwo = (value) => {
+    setChangeColorTwo(value !== "");
   };
-  const changeFormColorThree = () => {
-    setChangeColorThree(!changeColorThree);
+  const changeFormColorThree = (value) => {
+    setChangeColorThree(value !== "");
   };
   const districts = [
     "Баянзүрх дүүрэг",
@@ -136,12 +136,17 @@ export const EnterAddress = () => {
             }}
           >
             {selectedDistrict === "" && (
-              <InputLabel sx={inputLabelStyle}>
+              <InputLabel
+                sx={{
+                  ...inputLabelStyle,
+                  color: changeColor ? "#ffffff" : "#8b9e95",
+                }}
+              >
                 <LocationOnIcon
                   sx={{
                     width: 20,
                     height: 20,
-                    color: changeColor ? grey[100] : grey[900],
+                    color: changeColor ? "#ffffff" : grey[900],
                   }}
                 />
                 <Typography sx={{ color: changeColor ? "#ffffff" : "#8B8E95" }}>
@@ -168,8 +173,28 @@ export const EnterAddress = () => {
                   value={district}
                 >
                   <Box sx={{ display: "flex" }}>
-                    <LocationOnIcon sx={{ width: 24, height: 24 }} />
-                    <Typography sx={{}}>{district}</Typography>
+                    <LocationOnIcon
+                      sx={{
+                        width: 24,
+                        height: 24,
+                        // color: selectedDistrict ? "#ffffff" : grey[900],
+                      }}
+                    />
+                    <Typography
+                      how
+                      can
+                      only
+                      event
+                      target
+                      value
+                      formcontrol
+                      inner
+                      this
+                      color
+                      change // sx={{ color: selectedDistrict ? "#ffffff" : "#000000" }}
+                    >
+                      {district}
+                    </Typography>
                   </Box>
                 </MenuItem>
               ))}
@@ -210,8 +235,18 @@ export const EnterAddress = () => {
               {khoroo.map((khoroo) => (
                 <MenuItem sx={menuItemStyle} key={khoroo} value={khoroo}>
                   <Box sx={{ display: "flex" }}>
-                    <LocationOnIcon sx={{ width: 24, height: 24 }} />
-                    <Typography sx={{}}>{khoroo}</Typography>
+                    <LocationOnIcon
+                      sx={{
+                        width: 24,
+                        height: 24,
+                        // color: selectedKhoroo ? "#ffffff" : grey[900],
+                      }}
+                    />
+                    <Typography
+                    // sx={{ color: selectedKhoroo ? "#ffffff" : "#000000" }}
+                    >
+                      {khoroo}
+                    </Typography>
                   </Box>
                 </MenuItem>
               ))}
@@ -252,8 +287,18 @@ export const EnterAddress = () => {
               {apartment.map((apartment) => (
                 <MenuItem sx={menuItemStyle} key={apartment} value={apartment}>
                   <Box sx={{ display: "flex" }}>
-                    <LocationOnIcon sx={{ width: 24, height: 24 }} />
-                    <Typography sx={{}}>{apartment}</Typography>
+                    <LocationOnIcon
+                      sx={{
+                        width: 24,
+                        height: 24,
+                        // color: selectedApartment ? "#ffffff" : grey[900],
+                      }}
+                    />
+                    <Typography
+                    // sx={{ color: selectedApartment ? "#ffffff" : "#000000" }}
+                    >
+                      {apartment}
+                    </Typography>
                   </Box>
                 </MenuItem>
               ))}
@@ -286,7 +331,19 @@ export const EnterAddress = () => {
           </Box>
           <Box sx={{ display: "flex", gap: "4px", flexDirection: "column" }}>
             <Typography sx={topTextStyle}>Утасны дугаар*</Typography>
-            <TextField fullWidth placeholder="Утасны дугаараа оруулна уу" />
+            <TextField
+              fullWidth
+              type="number"
+              style={{
+                WebkitAppearance: "none",
+                MozAppearance: "textfield",
+              }}
+              inputProps={{
+                min: "0",
+                max: "99999999",
+              }}
+              placeholder="Утасны дугаараа оруулна уу"
+            />
           </Box>
           <Box sx={{ display: "flex", gap: 1, flexDirection: "column" }}>
             <Typography

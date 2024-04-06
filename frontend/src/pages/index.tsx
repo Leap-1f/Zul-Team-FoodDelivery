@@ -13,8 +13,8 @@ export default function Home() {
       <Box
         sx={{ justifyContent: "center", display: "flex", gap: 10, py: "250px" }}
       >
-        <EnterAddress />
-        <Orders />
+      <EnterAddress />
+      <Orders />
       </Box>
       <Footer />
     </>
