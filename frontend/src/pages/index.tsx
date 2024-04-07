@@ -9,13 +9,11 @@ export default function Home() {
   return (
     <>
       <Header></Header>
-      <StepOne />
-      <Box
-        sx={{ justifyContent: "center", display: "flex", gap: 10, py: "250px" }}
-      >
-      <EnterAddress />
-      <Orders />
+      <Box sx={{ display: "flex" }}>
+        <EnterAddress />
+        <Orders />
       </Box>
+
       <Footer />
     </>
   );
