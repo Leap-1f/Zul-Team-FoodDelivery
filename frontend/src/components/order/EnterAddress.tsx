@@ -13,13 +13,13 @@ import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import { grey } from "@mui/material/colors";
 
-export const EnterAddress = ({ inputPassProps }) => {
+export const EnterAddress = ({ inputPassProps }: any) => {
   const [allInputsFill, setAllInputsFill] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const [allInputsFilled, setAllInputsFilled] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     const { value } = event.target;
     setPaymentMethod(value);
   };
@@ -31,7 +31,7 @@ export const EnterAddress = ({ inputPassProps }) => {
         phoneNumber !== ""
     );
   };
-  const handlePhoneNumberChange = (event) => {
+  const handlePhoneNumberChange = (event: any) => {
     const { value } = event.target;
     setPhoneNumber(value);
     checkAllInputsFilled();
@@ -45,13 +45,13 @@ export const EnterAddress = ({ inputPassProps }) => {
   const [selectedApartment, setSelectedApartment] = useState("");
   const [changeColorThree, setChangeColorThree] = useState(false);
 
-  const changeFormColor = (value) => {
+  const changeFormColor = (value: any) => {
     setChangeColor(value !== "");
   };
-  const changeFormColorTwo = (value) => {
+  const changeFormColorTwo = (value: any) => {
     setChangeColorTwo(value !== "");
   };
-  const changeFormColorThree = (value) => {
+  const changeFormColorThree = (value: any) => {
     setChangeColorThree(value !== "");
   };
   useEffect(() => {
