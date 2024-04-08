@@ -2,13 +2,13 @@ import { UserModel } from "../model/user.model.js";
 import bcryct from "bcrypt";
 
 export const getUserByField = async (req, res) => {
-  //Login-d shiglana 
+  //Login-d shiglana
   const { email, password } = req.body;
   try {
-    const data = await UserModel.find({ email: toUpperCaseLetter(email)});
-    if(data.length ==0){
-      res.send({message: "Бүртгэлгүй хэрэглэгч байна"});
-    } else{
+    const data = await UserModel.find({ email: toUpperCaseLetter(email) });
+    if (data.length == 0) {
+      res.send({ message: "Бүртгэлгүй хэрэглэгч байна" });
+    } else {
       const isValid = await bcryct.compare(password, data[0].password);
       if (isValid) {
         console.log(data, "data");
@@ -16,7 +16,6 @@ export const getUserByField = async (req, res) => {
           token: data[0]._id,
           role: data[0].role,
           success: true,
-          
         });
       } else {
         res.send({
@@ -24,7 +23,6 @@ export const getUserByField = async (req, res) => {
         });
       }
     }
-    
   } catch (err) {
     console.log(err);
   }
@@ -54,7 +52,9 @@ export const createUser = async (req, res) => {
   const salt = bcryct.genSaltSync(1);
   const hashedPassword = await bcryct.hash(password, salt);
   try {
-    const existingUser = await UserModel.findOne({ email: toUpperCaseLetter(email) });
+    const existingUser = await UserModel.findOne({
+      email: toUpperCaseLetter(email),
+    });
     if (existingUser) {
       return res.send({ message: "И-мэйл бүртгэлтэй байна" });
     } else {
@@ -130,24 +130,24 @@ export const updateUser = async (req, res) => {
 export const getUserEmail = async (req, res) => {
   //forget password-d shiglana
   const { email } = req.body;
-  // try {
-  //   const checkUser = await UserModel.findOne({ email });
-  //   if (checkUser) {
-  //     return res.status(400).json({ message: "И-майл бүртгэлтэй байна" });
-  //   }
-  //   const newUser = await UserModel.create({
-  //     name,
-  //     email,
-  //     password: dataWithHashedPassword,
-  //     phoneNumber,
-  //     address: location,
-  //   });
-  //   console.log(newUser);
-  //   res.status(201).json({ success: true });
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).json({ message: "Internal server error" });
-  // }
+  try {
+    const checkUser = await UserModel.findOne({ email });
+    if (checkUser) {
+      return res.status(400).json({ message: "И-майл бүртгэлтэй байна" });
+    }
+    const newUser = await UserModel.create({
+      name,
+      email,
+      password: dataWithHashedPassword,
+      phoneNumber,
+      address: location,
+    });
+    console.log(newUser);
+    res.status(201).json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 export const updateUserPassword = async (req, res) => {
