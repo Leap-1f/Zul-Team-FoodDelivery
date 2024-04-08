@@ -3,7 +3,7 @@ import { StepTwo } from ".//orderTexts/StepTwo";
 import FoodImage from "./checkButtonImages/Image.svg";
 import Image from "next/image";
 
-export const Orders = ({ allTextInputsFilled }) => {
+export const Orders = ({ allInputsFilled }: any) => {
   return (
     <Box>
       <StepTwo />
@@ -93,14 +93,18 @@ export const Orders = ({ allTextInputsFilled }) => {
             </Typography>
           </Box>
           <Button
+            disabled={!allInputsFilled}
             sx={{
-              bgcolor: allTextInputsFilled ? "#18ba51" : "#EEEFF2",
+              bgcolor: allInputsFilled ? "#18ba51" : "#EEEFF2",
               width: "187px",
               borderRadius: "4px",
               fontWeight: "400",
               lineHeight: "19.09px",
               textAlign: "center",
-              color: allTextInputsFilled ? "#ffffff" : "#000000",
+              color: allInputsFilled ? "#ffffff" : "#1C2024",
+              ":hover": {
+                bgcolor: allInputsFilled ? "#18ba51" : "#EEEFF2",
+              },
             }}
           >
             Захиалах

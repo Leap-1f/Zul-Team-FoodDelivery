@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { BlueButton } from "../checkButtons/BlueButton";
 import { GreenButton } from "../checkButtons/GreenButton";
 
-export const StepTwo = ({ allInputsFilled }) => {
+export const StepTwo = () => {
   return (
     <Box
       sx={{
@@ -12,7 +12,7 @@ export const StepTwo = ({ allInputsFilled }) => {
         width: "432px",
       }}
     >
-  <BlueButton/>
+      <BlueButton />
       <Box sx={{ display: "flex ", gap: "4px", flexDirection: "column" }}>
         <Typography
           sx={{
