@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { BlueButton } from "../checkButtons/BlueButton";
-export const StepOne = () => {
+import { GreenButton } from "../checkButtons/GreenButton";
+export const StepOne = ({ allInputsFilled }) => {
   return (
     <Box
       sx={{
@@ -10,7 +11,7 @@ export const StepOne = () => {
         width: "432px",
       }}
     >
-      <BlueButton />
+      {allInputsFilled ? <GreenButton /> : <BlueButton />}
       <Box sx={{ display: "flex ", gap: "4px", flexDirection: "column" }}>
         <Typography
           sx={{
@@ -40,7 +41,7 @@ export const StepOne = () => {
             color: "#0468c8",
           }}
         >
-          Хаягийн мэдээлэл оруулах
+          {allInputsFilled ? "Оруулсан" : "Хүлээгдэж байна"}{" "}
         </Typography>
       </Box>
     </Box>

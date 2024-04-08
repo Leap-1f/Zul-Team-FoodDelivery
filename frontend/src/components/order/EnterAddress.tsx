@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StepOne } from "./orderTexts/StepOne";
 import {
   Box,
@@ -13,12 +13,28 @@ import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import { grey } from "@mui/material/colors";
 
-export const EnterAddress = () => {
+export const EnterAddress = ({ inputPassProps }) => {
+  const [allInputsFill, setAllInputsFill] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("cash");
+  const [allInputsFilled, setAllInputsFilled] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const handleChange = (event) => {
     const { value } = event.target;
     setPaymentMethod(value);
+  };
+  const checkAllInputsFilled = () => {
+    setAllInputsFilled(
+      selectedDistrict !== "" &&
+        selectedKhoroo !== "" &&
+        selectedApartment !== "" &&
+        phoneNumber !== ""
+    );
+  };
+  const handlePhoneNumberChange = (event) => {
+    const { value } = event.target;
+    setPhoneNumber(value);
+    checkAllInputsFilled();
   };
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [changeColor, setChangeColor] = useState(false);
@@ -38,6 +54,10 @@ export const EnterAddress = () => {
   const changeFormColorThree = (value) => {
     setChangeColorThree(value !== "");
   };
+  useEffect(() => {
+    checkAllInputsFilled();
+    inputPassProps(allInputsFilled);
+  }, [selectedDistrict, selectedKhoroo, selectedApartment]);
   const districts = [
     "Баянзүрх дүүрэг",
     "Хан-Уул дүүрэг",
@@ -105,8 +125,8 @@ export const EnterAddress = () => {
   };
 
   return (
-    <>
-      <StepOne />
+    <Box>
+      <StepOne allInputsFilled={allInputsFilled} />
       <Box
         sx={{
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.05)",
@@ -182,24 +202,9 @@ export const EnterAddress = () => {
                         sx={{
                           width: 24,
                           height: 24,
-                          // color: selectedDistrict ? "#ffffff" : grey[900],
                         }}
                       />
-                      <Typography
-                        how
-                        can
-                        only
-                        event
-                        target
-                        value
-                        formcontrol
-                        inner
-                        this
-                        color
-                        change // sx={{ color: selectedDistrict ? "#ffffff" : "#000000" }}
-                      >
-                        {district}
-                      </Typography>
+                      <Typography>{district}</Typography>
                     </Box>
                   </MenuItem>
                 ))}
@@ -244,14 +249,9 @@ export const EnterAddress = () => {
                         sx={{
                           width: 24,
                           height: 24,
-                          // color: selectedKhoroo ? "#ffffff" : grey[900],
                         }}
                       />
-                      <Typography
-                      // sx={{ color: selectedKhoroo ? "#ffffff" : "#000000" }}
-                      >
-                        {khoroo}
-                      </Typography>
+                      <Typography>{khoroo}</Typography>
                     </Box>
                   </MenuItem>
                 ))}
@@ -300,14 +300,9 @@ export const EnterAddress = () => {
                         sx={{
                           width: 24,
                           height: 24,
-                          // color: selectedApartment ? "#ffffff" : grey[900],
                         }}
                       />
-                      <Typography
-                      // sx={{ color: selectedApartment ? "#ffffff" : "#000000" }}
-                      >
-                        {apartment}
-                      </Typography>
+                      <Typography>{apartment}</Typography>
                     </Box>
                   </MenuItem>
                 ))}
@@ -343,6 +338,8 @@ export const EnterAddress = () => {
               <TextField
                 fullWidth
                 type="number"
+                value={phoneNumber}
+                onChange={handlePhoneNumberChange}
                 style={{
                   WebkitAppearance: "none",
                   MozAppearance: "textfield",
@@ -418,6 +415,6 @@ export const EnterAddress = () => {
           </Box>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };
