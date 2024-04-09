@@ -1,7 +1,5 @@
 import { UserModel } from "../model/user.model.js";
 import bcryct from "bcrypt";
-import nodemailer from "nodemailer";
-import crypto from "crypto";
 
 export const getUserByField = async (req, res) => {
   //Login-d shiglana
@@ -161,11 +159,11 @@ export const updateUserPassword = async (req, res) => {
     }
     await updatedUserData.updateOne(
       { email },
-      { verificationCode: null, codeExpires: null }
-      res.status(200).json({message:"Code verified succesfully"})
+      { verificationCode: null, codeExpires: null },
+      res.status(200).json({ message: "Code verified succesfully" })
     );
   } catch (err) {
     console.log(err);
-    res.status(500).json({message:"internal server error"})
+    res.status(500).json({ message: "internal server error" });
   }
 };

@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { UserModel } from "./model/user.model.js";
+import { UserModel } from "../src/model/user.model.js";
 
 function generateVerificationCode() {
   return Math.floor(100000 + Math.random() * 900000);
@@ -9,7 +9,7 @@ async function sendVerificationCode(email) {
   const code = generateVerificationCode();
   const codeExpires = new Date();
   codeExpires.setMinutes(codeExpires.getMinutes() + 30); // Code expires in 30 minutes
-
+  console.log(code);
   // Update the user's document with the new code and expiration time
   await UserModel.updateOne({ email }, { verificationCode: code, codeExpires });
 

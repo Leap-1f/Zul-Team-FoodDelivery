@@ -23,7 +23,9 @@ export const getAllCategories = async (req, res) => {
 export const createCategory = async (req, res) => {
   console.log(req.body.name, "req body name");
   try {
-    const existingCategory = await CategoryModel.findOne({ name: req.body.name });
+    const existingCategory = await CategoryModel.findOne({
+      name: req.body.name,
+    });
     if (existingCategory) {
       return res.send({ message: "Бүртгэгдсэн категори байна" });
     } else {
@@ -32,12 +34,11 @@ export const createCategory = async (req, res) => {
           name: req.body.name,
           foodId: [],
         });
-        res.send({success : true});
+        res.send({ success: true });
       } catch (err) {
         console.log(err);
       }
     }
-   
   } catch (err) {
     console.log(err);
   }
@@ -52,12 +53,11 @@ export const createCategory = async (req, res) => {
 //   }
 // };
 
-
-export const deleteCategory = async(req,res) => {
-  try{
-    const data = await CategoryModel.deleteOne({name : req.body.name})
-    res.send(data)
-  } catch(err){
+export const deleteCategory = async (req, res) => {
+  try {
+    const data = await CategoryModel.deleteOne({ name: req.body.name });
+    res.send(data);
+  } catch (err) {
     console.log(err);
   }
-}
+};

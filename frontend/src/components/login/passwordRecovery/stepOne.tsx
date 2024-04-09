@@ -1,6 +1,6 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { FormikProvider, useFormik } from "formik";
-import { passwordResetSchema, FromValues } from "./validationPasswordReser";
+import { passwordResetScheme, FromValues } from "./validationPasswordReser";
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "@/components/utils/context/userContext";
 
@@ -18,10 +18,12 @@ export const StepOne = ({ setCurrentStep, currentStep }: StepOneProps) => {
     initialValues: {
       email: "",
     },
-    validationSchema: passwordResetSchema,
+    validationSchema: passwordResetScheme,
     onSubmit: async (values) => {
+      console.log(values);
+
       try {
-        const data = await fetch(`${ENDPOINT_URL}/user/getUserEmail`, {
+        const data = await fetch(`${ENDPOINT_URL}/user/update-password`, {
           method: "GET",
           headers: {
             Accept: "application/json, text/plain, */*",
@@ -30,6 +32,7 @@ export const StepOne = ({ setCurrentStep, currentStep }: StepOneProps) => {
           body: JSON.stringify(values),
         });
         const response = await data.json();
+
         if (response.message) {
           setWarningMessage(response.message);
         } else if (response.success) {

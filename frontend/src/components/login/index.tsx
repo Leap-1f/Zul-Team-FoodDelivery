@@ -174,6 +174,9 @@ const Login = () => {
                         ? "#18BA51"
                         : "#EEEFF2",
                     color: "#EEEFF2",
+                    bgcolor: {
+                      ":hover": "#18BA51",
+                    },
                   }}
                 >
                   Нэвтрэх
