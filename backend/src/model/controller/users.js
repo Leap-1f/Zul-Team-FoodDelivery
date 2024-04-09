@@ -1,5 +1,7 @@
 import { UserModel } from "../model/user.model.js";
 import bcryct from "bcrypt";
+import nodemailer from "nodemailer";
+import crypto from "crypto";
 
 export const getUserByField = async (req, res) => {
   //Login-d shiglana
@@ -132,18 +134,11 @@ export const getUserEmail = async (req, res) => {
   const { email } = req.body;
   try {
     const checkUser = await UserModel.findOne({ email });
-    if (checkUser) {
+    if (!checkUser) {
       return res.status(400).json({ message: "И-майл бүртгэлтэй байна" });
     }
-    const newUser = await UserModel.create({
-      name,
-      email,
-      password: dataWithHashedPassword,
-      phoneNumber,
-      address: location,
-    });
-    console.log(newUser);
-    res.status(201).json({ success: true });
+    await sendVerificationCode(email);
+    res.status(200).json({ success: true });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -152,14 +147,25 @@ export const getUserEmail = async (req, res) => {
 
 export const updateUserPassword = async (req, res) => {
   //forget password-d ashiglana
-  const { id, newPassword } = req.body;
+  const { email, code } = req.body;
   try {
-    const updatedUserData = await UserModel.updateOne(
-      { _id: id },
-      { password: newPassword }
+    const updatedUserData = await UserModel.findOne({ email });
+    if (!updatedUserData) {
+      return res.status(400).json({ message: "User not found" });
+    }
+    if (updatedUserData.verificationCode !== code) {
+      return res.status(400).json({ message: "Invalid code" });
+    }
+    if (new Date() > updatedUserData.codeExpires) {
+      return res.status(400).json({ message: "code expired" });
+    }
+    await updatedUserData.updateOne(
+      { email },
+      { verificationCode: null, codeExpires: null }
+      res.status(200).json({message:"Code verified succesfully"})
     );
-    res.send(updatedUserData);
   } catch (err) {
     console.log(err);
+    res.status(500).json({message:"internal server error"})
   }
 };

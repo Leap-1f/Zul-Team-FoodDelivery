@@ -1,39 +1,54 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { FormikProvider, useFormik } from "formik";
-import { passwordResetScheme, FromValues } from "./validationPasswordReser";
-import { log } from "console";
-import { useEffect } from "react";
-import { useContext } from "react";
+import { passwordResetSchema, FromValues } from "./validationPasswordReser";
+import { useContext, useState, useEffect } from "react";
 import { UserContext } from "@/components/utils/context/userContext";
-import { Scale } from "@mui/icons-material";
 
 interface StepOneProps {
   setCurrentStep: (step: number) => void;
   currentStep: number;
 }
+
 export const StepOne = ({ setCurrentStep, currentStep }: StepOneProps) => {
-  const { passwordRecoveryUser, setPasswordRecoveryUser } =
-    useContext(UserContext);
+  const ENDPOINT_URL = process.env.NEXT_PUBLIC_ENDPOINT;
+  const [warningMessage, setWarningMessage] = useState("");
+  const { setPasswordRecoveryUser } = useContext(UserContext);
+
   const formikPasswordReset = useFormik<FromValues>({
     initialValues: {
       email: "",
     },
-    validationSchema: passwordResetScheme,
+    validationSchema: passwordResetSchema,
     onSubmit: async (values) => {
-      console.log("helloo");
-      console.log(values);
-      setPasswordRecoveryUser((prev) => ({ ...prev, email: values.email }));
-      setCurrentStep(currentStep + 1);
+      try {
+        const data = await fetch(`${ENDPOINT_URL}/user/getUserEmail`, {
+          method: "GET",
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+        const response = await data.json();
+        if (response.message) {
+          setWarningMessage(response.message);
+        } else if (response.success) {
+        }
+        setPasswordRecoveryUser((prev) => ({ ...prev, email: values.email }));
+        setCurrentStep(currentStep + 1);
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
     },
   });
-  useEffect(() => {}, []);
+
   return (
     <Stack
-      direction={"column"}
-      justifyContent={"center"}
-      alignItems={"center"}
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
       spacing={5}
-      width={"30%"}
+      width="30%"
       sx={{ scale: "90%" }}
     >
       <Typography variant="h5" sx={{ fontWeight: "bold" }}>
@@ -44,7 +59,7 @@ export const StepOne = ({ setCurrentStep, currentStep }: StepOneProps) => {
           style={{ width: "100%" }}
           onSubmit={formikPasswordReset.handleSubmit}
         >
-          <Stack width={"100%"} spacing={"4px"}>
+          <Stack width="100%" spacing="4px">
             <Typography>Имэйл</Typography>
             <TextField
               sx={{ width: "100%" }}
@@ -53,6 +68,14 @@ export const StepOne = ({ setCurrentStep, currentStep }: StepOneProps) => {
               value={formikPasswordReset.values.email}
               placeholder="Имэйл хаягаа оруулна уу"
             />
+            {warningMessage && (
+              <Typography
+                color={"#EF4444"}
+                sx={{ fontSize: "10px", alignItems: "center" }}
+              >
+                {warningMessage}
+              </Typography>
+            )}
             {formikPasswordReset.errors.email &&
             formikPasswordReset.touched.email ? (
               <Typography
