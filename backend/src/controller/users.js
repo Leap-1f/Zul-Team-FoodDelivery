@@ -133,10 +133,13 @@ export const getUserEmail = async (req, res) => {
   try {
     const checkUser = await UserModel.findOne({ email });
     if (!checkUser) {
-      return res.status(400).json({ message: "И-майл бүртгэлтэй байна" });
+      return res.status(400).json({ message: "И-майл бүртгэлгүй байна" });
+    } else if (checkUser) {
+      await sendVerificationCode(email),
+        res
+          .status(200)
+          .json({ success: true, message: "И-майл бүртгэлтэй байна" });
     }
-    await sendVerificationCode(email);
-    res.status(200).json({ success: true });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

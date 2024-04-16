@@ -9,7 +9,7 @@ async function sendVerificationCode(email) {
   const code = generateVerificationCode();
   const codeExpires = new Date();
   codeExpires.setMinutes(codeExpires.getMinutes() + 30); // Code expires in 30 minutes
-  console.log(code);
+
   // Update the user's document with the new code and expiration time
   await UserModel.updateOne({ email }, { verificationCode: code, codeExpires });
 
